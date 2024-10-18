@@ -5,6 +5,12 @@ function getOutcome(name, value, date) {
     return outcomeService.getOutcome(name, value, date);
 }
 
+async function getGenerateContentResultPromise(message) {
+    return await geminiService.model.generateContent(message);
+}
+
 exports.sendMessage = (body) => {
-    return geminiService.model.generateContent(body.message);
+    getGenerateContentResultPromise(body.message).then((result) => {
+        console.log(result.response.text());
+    });
 }
