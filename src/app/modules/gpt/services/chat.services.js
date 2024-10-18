@@ -1,8 +1,8 @@
 const openaiService = require('./openai.services');
-const outcome = require('../../core/services/outcome.services');
+const outcomeService = require('../../core/services/outcome.services');
 
 function getOutcome(name, value, date) {
-    return outcome.getOutcome(name, value, date);
+    return outcomeService.getOutcome(name, value, date);
 }
 
 async function callChatGptWithFunctions(userMessage) {
