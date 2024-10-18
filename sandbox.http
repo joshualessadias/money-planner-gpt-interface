@@ -2,5 +2,5 @@ POST http://localhost:8080/api/chat
 Content-Type: application/json
 
 {
-  "message": "I'm trying to integrate you with my budget control application"
+  "message": ""
 }
