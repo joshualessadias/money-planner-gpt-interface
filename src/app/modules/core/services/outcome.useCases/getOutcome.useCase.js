@@ -9,9 +9,9 @@ exports.getOutcome = (name, value, date, paymentMethod) => {
 
 exports.getOutcomeGeminiFunctionDeclaration = {
     name: "getOutcome",
+    description: "Returns an object containing the information of the user purchase.",
     parameters: {
         type: "OBJECT",
-        description: "Returns a string containing the information of the user purchase.",
         properties: {
             name: {
                 type: "STRING",

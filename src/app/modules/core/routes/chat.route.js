@@ -1,8 +1,8 @@
-const controller = require("../controllers/chat.controllers.js");
+const controller = require("../controllers/chat.controller.js");
 const router = require("express").Router();
 
 module.exports = app => {
     router.post("/", controller.sendMessage);
 
-    app.use('/api/chat', router);
+    app.use('/api/chat.useCases', router);
 };

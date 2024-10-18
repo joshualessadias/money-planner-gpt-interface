@@ -1,5 +1,5 @@
-const openaiService = require('./openai.services');
-const outcomeService = require('../../core/services/outcome.services');
+const openaiService = require('./openai.service');
+const outcomeService = require('../../core/services/outcome.useCases/getOutcome.useCase');
 
 function getOutcome(name, value, date) {
     return outcomeService.getOutcome(name, value, date);

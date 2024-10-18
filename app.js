@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
     res.json({message: "Welcome to MoneyPlanner Gpt interface."});
 });
 
-require("./src/app/modules/core/routes/chat.routes.js")(app);
+require("./src/app/modules/core/routes/chat.route.js")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

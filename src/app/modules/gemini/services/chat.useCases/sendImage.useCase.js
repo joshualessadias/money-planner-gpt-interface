@@ -1,8 +1,8 @@
-const {model, functions, contextMessage, fileManager} = require('./gemini.services');
+const {model, functions, contextImageMessage, fileManager} = require('../gemini.service');
 
 async function uploadImage() {
     console.log("Uploading image...");
-    const uploadResult = await fileManager.uploadFile("comprovante.jpeg", {
+    const uploadResult = await fileManager.uploadFile("src/resources/comprovante2.jpeg", {
         mimeType: "image/jpeg",
         displayName: "comprovante"
     });
@@ -11,11 +11,10 @@ async function uploadImage() {
     return uploadResult;
 }
 
-exports.sendMessage = async (message) => {
+exports.sendImage = async (body) => {
     const uploadResult = await uploadImage();
-    message = contextMessage + message;
-    console.log(`Sending message... ${message}`);
-    const result = await model.generateContent([message, {
+    console.log(`Sending message... ${contextImageMessage}`);
+    const result = await model.generateContent([contextImageMessage, {
         fileData: {
             fileUri: uploadResult.file.uri,
             mimeType: uploadResult.file.mimeType
