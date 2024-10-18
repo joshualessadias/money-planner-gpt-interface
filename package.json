@@ -1,0 +1,14 @@
+{
+  "name": "money-planner-gpt-interface",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
+    "openai": "^4.68.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0"
+  }
+}
