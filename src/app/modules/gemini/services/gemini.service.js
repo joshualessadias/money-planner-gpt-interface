@@ -1,33 +1,24 @@
-const {GoogleGenerativeAI} = require("@google/generative-ai");
-const {GoogleAIFileManager} = require("@google/generative-ai/server");
-const getOutcomeService = require('../../core/services/outcome.useCases/getOutcome.useCase');
-const getOutcomeListService = require("../../core/services/outcome.useCases/getOutcomeList.useCase");
+const {functions, fileManager} = require("../config/gemini.config");
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-exports.fileManager = new GoogleAIFileManager(process.env.GEMINI_API_KEY);
-
-exports.functions = {
-    getOutcome: ({name, value, date, paymentMethod}) => getOutcomeService.getOutcome(name, value, date, paymentMethod),
-    getOutcomeList: ({outcomes}) => getOutcomeListService.getOutcomeList(outcomes)
+exports.handleResult = async (result) => {
+    const calls = result.response.functionCalls();
+    if (calls) {
+        const firstCall = calls[0];
+        console.log(`Function call detected: ${firstCall.name}`);
+        return await functions[firstCall.name](firstCall.args);
+    } else {
+        console.log("No function call detected.");
+        return result.response.text();
+    }
 }
 
-exports.contextDocMessage = `Context: Perform function requests for the user. The user wants to retrieve information about a purchase that will be provided. Always try to get the total value of the purchase, because the user can send a purchase with multiple items.
-Important: Consider that today's date is ${new Date().toDateString()}.
-Important: provide information in the language of the user input that's bellow.
+exports.uploadFile = async (file) => {
+    console.log("Uploading file...");
+    const uploadResult = await fileManager.uploadFile(file.filepath, {
+        mimeType: file.mimetype,
+        displayName: file.originalFilename
+    });
+    console.log(`Uploaded file ${uploadResult.file.displayName} as: ${uploadResult.file.uri}`);
 
-`;
-
-exports.model = genAI.getGenerativeModel({
-    model: "gemini-1.5-flash", tools: [{
-        functionDeclarations: [getOutcomeService.getOutcomeGeminiFunctionDeclaration, getOutcomeListService.getOutcomeListGeminiFunctionDeclaration]
-    }]
-});
-
-exports.acceptedMimeTypes = [
-    "image/png",
-    "image/jpeg",
-    "image/webp",
-    "image/heic",
-    "image/heif",
-    "application/pdf"
-]
+    return uploadResult;
+}

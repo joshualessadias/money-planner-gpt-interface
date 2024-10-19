@@ -1,7 +1,8 @@
 const formidable = require("formidable");
-const {acceptedMimeTypes} = require("../../gemini/services/gemini.service");
+const {acceptedMimeTypes, acceptedAudioMimeTypes} = require("../../gemini/config/gemini.config");
 const {sendFile} = require("../../gemini/services/chat/useCases/sendFile.useCase");
 const {sendText} = require("../../gemini/services/chat/useCases/sendText.useCase");
+const {sendAudio} = require("../../gemini/services/chat/useCases/sendAudio.useCase");
 
 exports.sendMessage = async (req, res) => {
     const contentType = req.headers['content-type'];
@@ -17,7 +18,10 @@ exports.sendMessage = async (req, res) => {
                 res.status(500).send(err);
                 return;
             }
-            if (acceptedMimeTypes.includes(files.file[0].mimetype)) {
+            if (acceptedAudioMimeTypes.includes(files.file[0].mimetype)) {
+                res.send(await sendAudio(files.file[0]));
+                return;
+            } else if (acceptedMimeTypes.includes(files.file[0].mimetype)) {
                 res.send(await sendFile(files.file[0]));
                 return;
             }
