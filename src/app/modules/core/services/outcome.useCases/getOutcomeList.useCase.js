@@ -31,7 +31,7 @@ exports.getOutcomeListGeminiFunctionDeclaration = {
                         },
                         date: {
                             type: "STRING",
-                            description: "Date when the purchase was made. It should be formatted as pt-BR.",
+                            description: "Date when the purchase was made. It should be formatted as dd/mm/yyyy.",
                         },
                         paymentMethod: {
                             type: "STRING",

@@ -11,9 +11,11 @@ exports.functions = {
     getOutcomeList: ({outcomes}) => getOutcomeListService.getOutcomeList(outcomes)
 }
 
-exports.contextImageMessage = "Context: Perform function requests for the user. The user wants to retrieve information about a purchase that will be provided. Always try to get the total value of the purchase, because the user can send a purchase with multiple items.\n\n";
+exports.contextDocMessage = `Context: Perform function requests for the user. The user wants to retrieve information about a purchase that will be provided. Always try to get the total value of the purchase, because the user can send a purchase with multiple items.
+Important: Consider that today's date is ${new Date().toDateString()}.
+Important: provide information in the language of the user input that's bellow.
 
-exports.contextDocMessage = "Context: Perform function requests for the user. The user wants to retrieve information about a purchase that will be provided. Always try to get the total value of the purchase, because the user can send a purchase with multiple items.\n\n";
+`;
 
 exports.model = genAI.getGenerativeModel({
     model: "gemini-1.5-flash", tools: [{
@@ -21,3 +23,11 @@ exports.model = genAI.getGenerativeModel({
     }]
 });
 
+exports.acceptedMimeTypes = [
+    "image/png",
+    "image/jpeg",
+    "image/webp",
+    "image/heic",
+    "image/heif",
+    "application/pdf"
+]
