@@ -1,4 +1,4 @@
-const {model, functions, contextDocMessage, fileManager} = require('../../../config/gemini.config');
+const {model, contextDocMessage} = require('../../../config/gemini.config');
 const {handleResult, uploadFile} = require("../../gemini.service");
 
 exports.sendFile = async (file) => {

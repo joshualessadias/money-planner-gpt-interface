@@ -1,4 +1,4 @@
-const {model, functions, contextDocMessage, fileManager} = require('../../../config/gemini.config');
+const {model, contextDocMessage, fileManager} = require('../../../config/gemini.config');
 const {handleResult, uploadFile} = require("../../gemini.service");
 const {FileState} = require("@google/generative-ai/server");
 
